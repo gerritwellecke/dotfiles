@@ -2,6 +2,19 @@
 " vimrc -- Author: Gerrit Wellecke
 "
 " many things taken from https://github.com/amix/vimrc
+"
+" to setup:
+" 1. -- install vundle
+" $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+"
+" 2. -- install plugins
+" then open vim and run :PluginInstall
+"
+" 3. -- install YCM
+" $ cd ~/.vim/bundle/YouCompleteMe
+" $ ./install.py --clang-completer
+"
+" this should do the job
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 set nocompatible		" required
