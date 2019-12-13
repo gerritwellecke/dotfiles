@@ -81,8 +81,9 @@ set mat=0
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
-set t_vb=
-set tm=500
+set t_vb= "not actually sure what this does
+set tm=500 "not actually sure what this does
+
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
@@ -92,7 +93,8 @@ endif
 " Add a bit extra margin to the left
 set foldcolumn=1
 
-
+" Hide -- INSERT -- and such as already show by airline
+set noshowmode
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -136,8 +138,8 @@ set tabstop=4
 set lbr
 set tw=500
 
-set ai "Auto indent
-set si "Smart indent
+set autoindent "Auto indent
+"set smartindent "Smart indent -- commented out as advised to only use if unhappy with current indentation
 set wrap "Wrap lines
 
 
@@ -257,9 +259,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-"""""""""""""""""
-" Python packages
-"""""""""""""""""
 
 " Auto indentation for python
 Plugin 'vim-scripts/indentpython.vim'
@@ -270,6 +269,7 @@ Plugin 'scrooloose/nerdtree'
 
 " autocompletion of brackets, quotes, etc
 Plugin 'Raimondi/delimitMate'
+    let delimitMate_expand_cr=2
 
 " status bar on the bottom
 Plugin 'vim-airline/vim-airline'
