@@ -4,6 +4,7 @@
 " many things taken from https://github.com/amix/vimrc
 "
 " to setup:
+" just use the setup script from github, else:
 " 1. -- install vundle
 " $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 "
@@ -90,9 +91,6 @@ if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=
 endif
 
-" Add a bit extra margin to the left
-set foldcolumn=1
-
 " Hide -- INSERT -- and such as already show by airline
 set noshowmode
 
@@ -135,8 +133,8 @@ set shiftwidth=4
 set tabstop=4
 
 " Linebreak on 500 characters
-set lbr
-set tw=500
+" set lbr
+" set tw=500
 
 set autoindent "Auto indent
 "set smartindent "Smart indent -- commented out as advised to only use if unhappy with current indentation
@@ -148,10 +146,6 @@ set wrap "Wrap lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
-map <s-space> :noh<cr>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -243,9 +237,9 @@ inoremap jj <Esc>
 nnoremap j gj
 nnoremap k gk
 
+
+
 filetype off			" required
-
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -270,6 +264,8 @@ Plugin 'scrooloose/nerdtree'
 " autocompletion of brackets, quotes, etc
 Plugin 'Raimondi/delimitMate'
     let delimitMate_expand_cr=2
+    " expand space in bash as it is needed by bash-syntax
+    au FileType sh let b:delimitMate_expand_space=1
 
 " status bar on the bottom
 Plugin 'vim-airline/vim-airline'
@@ -289,11 +285,19 @@ Plugin 'Valloric/YouCompleteMe'
     let g:ycm_autoclose_preview_window_after_completion=1
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-    let g:ycm_max_num_candidates = 25
+    let g:ycm_max_num_candidates = 10
+    let g:ycm_max_num_identifier_candidates = 5
     let g:SuperTabDefaultCompletionType = '<C-n>'
 
     map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
     
+    " LaTeX autocompletion with YCM
+    if !exists('g:ycm_semantic_triggers')
+        let g:ycm_semantic_triggers = {}
+    endif
+    au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+    au VimEnter *.tex let g:ycm_min_num_of_chars_for_completion = 99
+   
 " snippets
 Plugin 'sirver/UltiSnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
@@ -314,15 +318,16 @@ call vundle#end()		    " required
 filetype plugin indent on 	" required
 
 
-" LaTeX autocompletion with YCM
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
-
 " enable syntax highlighting
 syntax on
 
 " set colorscheme
 set background=dark
 colorscheme gruvbox
+
+" mark 81st character if line is too long
+" highlight LineTooLongMarker ctermbg=magenta guibg=Magenta
+" au Filetype python,c,cpp call matchadd('LineTooLongMarker', '\%81v', 100)
+
+" mark 81st column as ruler when coding
+au Filetype python,c,cpp,sh set colorcolumn=81

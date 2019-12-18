@@ -1,4 +1,9 @@
-#!/bin/bash -x
+#!/bin/bash
+
+# copy vimrc to home if executed from downloaded directory
+if [ -f "setup.sh" ] && [ -f ".vimrc" ]; then
+    cp .vimrc ~
+fi
 
 # change into HOME directory
 cd ~
