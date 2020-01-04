@@ -94,6 +94,8 @@ endif
 " Hide -- INSERT -- and such as already show by airline
 set noshowmode
 
+set guifont=Menlo-Regular:h14
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -160,14 +162,14 @@ map <leader>bd :Bclose<cr>:tabclose<cr>gT
 map <leader>ba :bufdo bd<cr>
 
 " Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
+" map <leader>tn :tabnew<cr>
+" map <leader>to :tabonly<cr>
+" map <leader>tc :tabclose<cr>
+" map <leader>tm :tabmove 
+" map <leader>t<leader> :tabnext 
 " not sure if the next two will prove useful
-map <leader>l :tabnext<cr>
-map <leader>h :tabprevious<cr>
+" map <leader>l :tabnext<cr>
+" map <leader>h :tabprevious<cr>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -227,7 +229,7 @@ fun! CleanExtraSpaces()
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
+    autocmd BufWritePre *.txt,*.js,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.coffee :call CleanExtraSpaces()
 endif
 
 " jj as Esc in input mode
@@ -236,6 +238,8 @@ inoremap jj <Esc>
 " move in editor lines not code lines
 nnoremap j gj
 nnoremap k gk
+nnoremap J 10gj
+nnoremap K 10gk
 
 
 
@@ -266,6 +270,8 @@ Plugin 'Raimondi/delimitMate'
     let delimitMate_expand_cr=2
     " expand space in bash as it is needed by bash-syntax
     au FileType sh let b:delimitMate_expand_space=1
+    " add $ to autoclose symbols to type inline math in LaTeX
+    au FileType tex let b:delimitMate_quotes="\" ' ` $"
 
 " status bar on the bottom
 Plugin 'vim-airline/vim-airline'
@@ -275,7 +281,18 @@ Plugin 'lervag/vimtex'
     let g:tex_flavor='latex'
     let g:vimtex_view_method='skim'
     let g:vimtex_quickfix_mode=0
-
+    " added shell-escape option to compile {minted}
+    let g:vimtex_compiler_latexmk = {
+        \ 'options' : [
+        \   '-pdf',
+        \   '-shell-escape',
+        \   '-verbose',
+        \   '-file-line-error',
+        \   '-synctex=1',
+        \   '-interaction=nonstopmode',
+        \ ],
+        \}
+    
 " get YCM and UltiSnips to not conflict
 Plugin 'ervandew/supertab'
 
@@ -285,7 +302,7 @@ Plugin 'Valloric/YouCompleteMe'
     let g:ycm_autoclose_preview_window_after_completion=1
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
     let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-    let g:ycm_max_num_candidates = 10
+    let g:ycm_max_num_candidates = 25
     let g:ycm_max_num_identifier_candidates = 5
     let g:SuperTabDefaultCompletionType = '<C-n>'
 
@@ -296,13 +313,16 @@ Plugin 'Valloric/YouCompleteMe'
         let g:ycm_semantic_triggers = {}
     endif
     au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
-    au VimEnter *.tex let g:ycm_min_num_of_chars_for_completion = 99
+    au FileType tex let g:ycm_min_num_of_chars_for_completion = 99
+    " make code more readable
+    au FileType tex set conceallevel=1
+    au FileType tex let g:tex_conceal='abdmg'
    
 " snippets
 Plugin 'sirver/UltiSnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
-    let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+    let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
     let g:UltiSnipsSnippetDirectories=["bundle/UltiSnips"]
 
 " colorschemes
@@ -310,6 +330,7 @@ Plugin 'tomasr/molokai'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
+Plugin 'arcticicestudio/nord-vim'
 
 " check out these ones:
 " find more on vimawesome.com
@@ -331,3 +352,5 @@ colorscheme gruvbox
 
 " mark 81st column as ruler when coding
 au Filetype python,c,cpp,sh set colorcolumn=81
+
+au FileType tex noremap <leader>tt :VimtexTocOpen<CR>
