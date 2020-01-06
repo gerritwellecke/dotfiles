@@ -147,9 +147,9 @@ snippet templatePhy "Physics paper template" b
 endsnippet
 
 snippet beg "begin{} / end{}" bA
-\\begin{$1}
+\begin{$1}
 	$0
-\\end{$1}
+\end{$1}
 endsnippet
 
 priority 100
@@ -203,29 +203,30 @@ snippet pac "Package" b
 \usepackage[${1:options}]{${2:package}}$0
 endsnippet
 
-snippet aln "Align" bA
+snippet ali "Align" bA
 \begin{align}
 	${1:${VISUAL}}
 \end{align}
 endsnippet
 
-snippet eqn "Equation" bA
+snippet equ "Equation" bA
 \begin{equation}
 	${1:${VISUAL}}
 \end{equation}
 endsnippet
 
-snippet *aln "Align w/o number" bA
+snippet *ali "Align w/o number" bA
 \begin{align*}
 	${1:${VISUAL}}
 \end{align*}
 endsnippet
 
-snippet *eqn "Equation w/o number" bA
+snippet *equ "Equation w/o number" bA
 \begin{equation*}
 	${1:${VISUAL}}
 \end{equation*}
 endsnippet
+
 context "math()"
 snippet // "Fraction" iA
 \\frac{$1}{$2}$0
@@ -339,7 +340,7 @@ snippet conj "conjugate" iA
 endsnippet
 
 snippet sum "sum" w
-\sum_{${1:n=${2:1}}}^{${3:\infty}} $0
+\sum_{${1:n=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
 snippet \int "integral" w
@@ -369,7 +370,7 @@ snippet limsup "limsup" w
 endsnippet
 
 snippet prod "product" w
-\prod_{${1:n=${2:1}}}^{${3:\infty}} ${4:${VISUAL}} $0
+\prod_{${1:n=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
 snippet pderiv "d/dx" w
@@ -386,7 +387,7 @@ snippet sqrt "\sqrt{}" iA
 endsnippet
 
 context "math()"
-snippet sq "^2" iA
+snippet sr "^2" iA
 ^2
 endsnippet
 
@@ -427,7 +428,7 @@ snippet >= "geq" iA
 endsnippet
 
 context "math()"
-snippet EE "geq" iA
+snippet EE "exists" iA
 \exists 
 endsnippet
 
@@ -516,11 +517,13 @@ snippet set "set" wA
 \\{$1\\} $0
 endsnippet
 
+priority 300
 context "math()"
-snippet '(?<!i)sts' "text subscript" irA
+snippet stt "text subscript" iA
 _\text{$1}$0
 endsnippet
 
+priority 200
 context "math()"
 snippet tt "text" iA
 \text{$1}$0
@@ -787,22 +790,22 @@ endsnippet
 # Vectors
 priority 100
 context "math()"
-snippet vec "Vector" 
+snippet vec "Vector" wA
 \\vv*{$1}{$2}$0
 endsnippet
 
 context "math()"
-snippet dvec "dotted vector" 
+snippet dvec "dotted vector" wA
 \dot{\vv*{$1}{$2}}$0
 endsnippet
 
 context "math()"
-snippet ddvec "double dotted vector"
+snippet ddvec "double dotted vector" wA
 \ddot{\vv*{$1}{$2}}$0
 endsnippet
 
 context "math()"
-snippet pmb "bold vector"
+snippet pmb "bold vector" wA
 \pmb{$1}$0
 endsnippet
 
