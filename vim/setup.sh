@@ -3,6 +3,8 @@
 # copy vimrc to home if executed from downloaded directory
 if [ -f "setup.sh" ] && [ -f ".vimrc" ]; then
     cp .vimrc ~
+    mkdir ~/snippets_temp
+    cp *.snippets ~/snippets_temp/
 fi
 
 # change into HOME directory
@@ -20,6 +22,10 @@ cd ~/.vim/bundle/YouCompleteMe
 
 # return to HOME directory
 cd ~
+
+# move snippets into Ultisnips directory
+mv ~/snippets_temp/* ~/.vim/bundle/UltiSnips/
+rmdir ~/snippets_temp/
 
 # done
 echo "VIM setup successful"
