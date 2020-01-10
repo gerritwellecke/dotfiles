@@ -87,14 +87,14 @@ set tm=500 "not actually sure what this does
 
 
 " Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
+autocmd GUIEnter * set vb t_vb=
 
 " Hide -- INSERT -- and such as already show by airline
 set noshowmode
 
-set guifont=Menlo-Regular:h14
+if has("gui_macvim")
+    set guifont=Menlo-Regular:h15
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
