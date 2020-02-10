@@ -1,0 +1,27 @@
+% Standard math packages:
+\usepackage{amsmath, amssym, amsfonts, amsthm, mathtools}
+
+% for vectors: (\vec, \tens, \matr)
+\usepackage[uline]{hhtensor}
+% for tensors: (\tensor[before]{T}{after}, T\indices{^a_b^{cd}})
+\usepackage{tensor}
+
+
+% self defined theorem environments
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}[chapter]
+
+\theoremstyle{definition}
+\newtheorem{definition}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{rmk}{Remark}
+\newtheorem{example}[thm]{Example}
+
+
+% useful commands in math
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\O}{\mathcal{O}}
+\newcommand{\const}{\mathrm{const.}}
+\renewcommand{\d}{\mathrm{d}}
+\renewcommand{\i}{\mathrm{i}}

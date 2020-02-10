@@ -1,0 +1,47 @@
+\documentclass[11pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+
+
+% basic layout
+\usepackage[margin=1in]{geometry}
+
+\usepackage{fancyhdf}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[position]{Content}
+\fancyfoot[position]{Content}
+
+\renewcommand{\headrulewidth}{1pt}
+\renewcommand{\footrulewidth}{1pt}
+
+\setlength\parindent{0pt}
+
+
+% bibliography
+\usepackage{csquotes}
+\usepackage[backend=biber, sorting=none]{biblatex}
+\bibliography{references} % bibfile w/o file ending!
+
+
+% tables
+\usepackage{booktabs}
+
+
+% listings
+\usepackage{enumitem}
+
+
+% graphics & figures
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage[labelfont=bf]{caption}
+
+
+% linked files
+\usepackage{hyperref}
+
+
+% for bigger projects (this should be the last package included)
+% \usepackage{subfiles}
