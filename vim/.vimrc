@@ -261,6 +261,8 @@ Plugin 'gmarik/Vundle.vim'
 " Auto indentation for python
 Plugin 'vim-scripts/indentpython.vim'
 
+" Julia support
+Plugin 'julialang/julia-vim'
 
 " NERDTree file explorer
 Plugin 'scrooloose/nerdtree'
@@ -324,6 +326,7 @@ Plugin 'sirver/UltiSnips'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
     let g:UltiSnipsSnippetDirectories=["bundle/UltiSnips"]
+    let g:UltiSnipsEditSplit = 'horizontal'
 
 " colorschemes
 Plugin 'tomasr/molokai'
@@ -354,3 +357,7 @@ colorscheme gruvbox
 au Filetype python,c,cpp,sh set colorcolumn=81
 
 au FileType tex noremap <leader>tt :VimtexTocOpen<CR>
+
+
+" disable continuing comments on multiple lines
+au FileType * set fo -=r fo-=o

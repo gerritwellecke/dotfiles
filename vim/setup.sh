@@ -2,30 +2,23 @@
 
 # copy vimrc to home if executed from downloaded directory
 if [ -f "setup.sh" ] && [ -f ".vimrc" ]; then
+    echo "Copying vimrc and snippet files"
     cp .vimrc ~
-    mkdir ~/snippets_temp
-    cp *.snippets ~/snippets_temp/
 fi
 
-# change into HOME directory
-cd ~
-
 # download Vundle plugin manager
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+if [ ! -d "~/.vim/bundle" ]; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
 
 # install plugins
 vim +PluginInstall +qall
 
 # install YouCompleteMe
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
+python3 ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
-# return to HOME directory
-cd ~
-
-# move snippets into Ultisnips directory
-mv ~/snippets_temp/* ~/.vim/bundle/UltiSnips/
-rmdir ~/snippets_temp/
+# copy snippet files to UltiSnips directory
+cp *.snippets ~/.vim/bundle/UltiSnips
 
 # done
-echo "VIM setup successful"
+echo "VIM setup done"

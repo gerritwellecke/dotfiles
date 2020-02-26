@@ -284,7 +284,7 @@ snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
 endsnippet
 
 snippet == "equals" iA
-&= $0 
+&= $0
 endsnippet
 
 context "math()"
@@ -316,7 +316,7 @@ snippet lr "left( right)" i
 endsnippet
 
 context "math()"
-snippet lr( "left( right)" i
+snippet lrp "left( right)" i
 \left( ${1:${VISUAL}} \right) $0
 endsnippet
 
@@ -331,28 +331,18 @@ snippet lrn "left|| right||" i
 endsnippet
 
 context "math()"
-snippet lr{ "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
-endsnippet
-
-context "math()"
 snippet lrb "left\{ right\}" i
 \left\\{ ${1:${VISUAL}} \right\\} $0
 endsnippet
 
 context "math()"
-snippet lr[ "left[ right]" i
+snippet lrbb "left[ right]" i
 \left[ ${1:${VISUAL}} \right] $0
 endsnippet
 
 context "math()"
 snippet lra "leftangle rightangle" iA
 \left< ${1:${VISUAL}} \right>$0
-endsnippet
-
-context "math()"
-snippet conj "conjugate" iA
-\overline{$1}$0
 endsnippet
 
 snippet sum "sum" w
@@ -363,43 +353,56 @@ snippet \int "integral" w
 \int_{${1:\mathbb{R}}}${2:^{${3:\infty}}} $0
 endsnippet
 
+priority 300
+context "math()"
+snippet dint "integral" wA
+\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
+endsnippet
+
+priority 1000
 context "math()"
 snippet ee "exp(...)" wiA
 \mathrm{e}^{$1}$0
 endsnippet
 
 context "math()"
-snippet \exp "exp(...)"
+snippet \exp "exp(...)" i
 \exp \left( $1 \right)$0
 endsnippet
 
+context "math()"
 snippet taylor "taylor" w
 \sum_{${1:k}=${2:0}}^{${3:\infty}} ${4:c_$1} (x-a)^$1 $0
 endsnippet
 
+context "math()"
 snippet lim "limit" w
 \lim_{${1:n} \to ${2:\infty}} 
 endsnippet
 
+context "math()"
 snippet limsup "limsup" w
 \limsup_{${1:n} \to ${2:\infty}} 
 endsnippet
 
+context "math()"
 snippet prod "product" w
 \prod_{${1:n=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
 endsnippet
 
-snippet pderiv "d/dx" w
-\frac{\partial ${1:V}}{\partial ${2:x}} $0
+context "math()"
+snippet \partial "d/dx" w
+\frac{\partial ${1:V}}{\partial ${2:x}}$0
 endsnippet
 
+context "math()"
 snippet deriv "d/dx" w
-\frac{\mathrm{d} ${1:V}}{\mathrm{d} ${2:x}} $0
+\frac{\mathrm{d} ${1:V}}{\mathrm{d} ${2:x}}$0
 endsnippet
 
 context "math()"
 snippet sqrt "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}} $0
+\sqrt{${1:${VISUAL}}}$0
 endsnippet
 
 context "math()"
@@ -501,12 +504,6 @@ priority 100
 context "math()"
 snippet '(?<!\\)(sin|cos|arccot|cot|csc|partial|ln|log|exp|star|perp|propto|hbar)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
-endsnippet
-
-priority 300
-context "math()"
-snippet dint "integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
 endsnippet
 
 priority 200
@@ -617,9 +614,9 @@ endsnippet
 
 # Self defined Environments
 snippet rmk "Remark" bA
-\begin{rmk}[${1:title}]
+\begin{remark}[${1:title}]
 	$2
-\end{rmk}
+\end{remark}
 endsnippet
 
 snippet def "Definition" bA
@@ -635,9 +632,9 @@ snippet example "Example" bA
 endsnippet
 
 snippet thm "Theorem" bA
-\begin{thm}[${1:title}]
+\begin{theorem}[${1:title}]
 	$2
-\end{thm}
+\end{theorem}
 endsnippet
 
 # Self defined tcbtheorems
@@ -831,22 +828,17 @@ endsnippet
 priority 100
 context "math()"
 snippet vec "Vector" wA
-\\vv*{$1}{$2}$0
+\vec{$1}$0
 endsnippet
 
 context "math()"
 snippet dvec "dotted vector" wA
-\dot{\vv*{$1}{$2}}$0
+\dot{\vec{$1}}$0
 endsnippet
 
 context "math()"
 snippet ddvec "double dotted vector" wA
-\ddot{\vv*{$1}{$2}}$0
-endsnippet
-
-context "math()"
-snippet pmb "bold vector" wA
-\pmb{$1}$0
+\ddot{\vec{$1}}$0
 endsnippet
 
 
