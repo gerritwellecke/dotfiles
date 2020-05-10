@@ -181,9 +181,19 @@ priority 10
 snippet misfig "Missing figure environment" b
 \begin{figure}[${1:htbp}]
 	\centering
-	% \includegraphics[width=\textwidth]{/path_to_image}
+	% \includegraphics[]{/path_to_image}
 	\missingfigure{$2}
 	\caption{$3}
+	\label{fig:${4:${2/\W+/-/g}}}
+\end{figure}
+endsnippet
+
+snippet misdraw "Missing drawing" b
+\begin{figure}[${1:htbp}]
+	\centering
+	% \includegraphics[]{$2.png}
+	\missingfigure{$2}
+	\caption{${3:$2}}
 	\label{fig:${4:${2/\W+/-/g}}}
 \end{figure}
 endsnippet
@@ -345,18 +355,18 @@ snippet lra "leftangle rightangle" iA
 \left< ${1:${VISUAL}} \right>$0
 endsnippet
 
-snippet sum "sum" w
-\sum_{${1:n=0}}${2:^{${3:\infty}}} ${4:${VISUAL}}
+snippet \sum "sum" w
+\sum_{${1:n=0}}${2:^{${3:\infty}}} ${0:${VISUAL}}
 endsnippet
 
 snippet \int "integral" w
-\int_{${1:\mathbb{R}}}${2:^{${3:\infty}}} $0
+\int_{${1:\mathbb{R}}}${2:^{${3:\infty}}} ${4:\mathrm{d}${5: x}}\, ${0:${VISUAL}}
 endsnippet
 
 priority 300
 context "math()"
 snippet dint "integral" wA
-\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
+\int ${1:\mathrm{d}${2: x}}\, ${0:${VISUAL}}
 endsnippet
 
 priority 1000
@@ -496,13 +506,58 @@ snippet norm "norm" iA
 endsnippet
 
 context "math()"
+snippet thf "therefore" wA
+\therefore $0
+endsnippet
+
+context "math()"
 snippet Rar "Rightarrow" wA
 \Rightarrow $0
 endsnippet
 
+context "math()"
+snippet rar "rightarrow" wA
+\rightarrow $0
+endsnippet
+
+context "math()"
+snippet Lar "Leftarrow" wA
+\Leftarrow $0
+endsnippet
+
+context "math()"
+snippet lar "leftarrow" wA
+\leftarrow $0
+endsnippet
+
+context "math()"
+snippet Lrar "Leftrightarrow" wA
+\Leftrightarrow $0
+endsnippet
+
+context "math()"
+snippet lrar "Leftrightarrow" wA
+\leftrightarrow $0
+endsnippet
+
+context "math()"
+snippet Lar "Leftarrow" wA
+\Leftarrow $0
+endsnippet
+
+context "math()"
+snippet . "Equation period" w
+\,. $0
+endsnippet
+
+context "math()"
+snippet , "Equation comma" w
+\,, $0
+endsnippet
+
 priority 100
 context "math()"
-snippet '(?<!\\)(sin|cos|arccot|cot|csc|partial|ln|log|exp|star|perp|propto|hbar)' "ln" rwA
+snippet '(?<!\\)(sin|cos|arccot|cot|csc|partial|ln|log|exp|star|perp|propto|hbar|sum)' "ln" rwA
 \\`!p snip.rv = match.group(1)`
 endsnippet
 
@@ -514,13 +569,23 @@ endsnippet
 
 priority 200
 context "math()"
-snippet invs "inverse" iA
+snippet inv "inverse" iA
 ^{-1}
 endsnippet
 
 context "math()"
+snippet trans "transpose" iA
+^\mathrm{T}
+endsnippet
+
+context "math()"
+snippet conj "conjugate" iA
+^*
+endsnippet
+
+context "math()"
 snippet compl "complement" iA
-^{c}
+^{\mathrm{c}}
 endsnippet
 
 snippet >> ">>" iA
@@ -836,11 +901,39 @@ snippet dvec "dotted vector" wA
 \dot{\vec{$1}}$0
 endsnippet
 
+priority 110
+context "math()"
+snippet tvec "transpose vector" wA
+\vec{$1}^\mathrm{T}$0
+endsnippet
+
+context "math()"
+snippet ivec "inverse vector" wA
+\vec{$1}^{-1}$0
+endsnippet
+
 context "math()"
 snippet ddvec "double dotted vector" wA
 \ddot{\vec{$1}}$0
 endsnippet
 
+context "math()"
+snippet mat "Matrix" wA
+\matr{$1}$0
+endsnippet
+
+priority 110
+context "math()"
+snippet tmat "transpose Matrix" wA
+\matr{$1}^\mathrm{T}$0
+endsnippet
+
+context "math()"
+snippet imat "inverse Matrix" wA
+\matr{$1}^{-1}$0
+endsnippet
+
+priority 100
 
 snippet plot "Plot" bw
 \begin{figure}[$1]
