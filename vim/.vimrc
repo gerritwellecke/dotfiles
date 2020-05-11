@@ -117,6 +117,7 @@ set ffs=unix,mac,dos
 
 " line numbers
 set nu
+set rnu
 
 
 
@@ -273,7 +274,7 @@ Plugin 'Raimondi/delimitMate'
     " expand space in bash as it is needed by bash-syntax
     au FileType sh let b:delimitMate_expand_space=1
     " add $ to autoclose symbols to type inline math in LaTeX
-    au FileType tex let b:delimitMate_quotes="\" ' ` $"
+    au FileType tex let b:delimitMate_quotes="\" ` $"
 
 " status bar on the bottom
 Plugin 'vim-airline/vim-airline'
@@ -354,7 +355,7 @@ colorscheme gruvbox
 " au Filetype python,c,cpp call matchadd('LineTooLongMarker', '\%81v', 100)
 
 " mark 81st column as ruler when coding
-au Filetype python,c,cpp,sh set colorcolumn=81
+au FileType python,c,cpp,sh set colorcolumn=81
 
 au FileType tex noremap <leader>tt :VimtexTocOpen<CR>
 
