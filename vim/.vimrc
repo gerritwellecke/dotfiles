@@ -244,32 +244,30 @@ nnoremap K 10gk
 
 
 
-filetype off			" required
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vundle
+" => Vundle - not anymore!
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" make sure Vim-Plug is installed
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
+" Vim-Plug
+call plug#begin('~/.vim/bundle')
 
 " Auto indentation for python
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/indentpython.vim'
 
 " Julia support
-Plugin 'julialang/julia-vim'
+Plug 'julialang/julia-vim'
 
 " NERDTree file explorer
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 
 " autocompletion of brackets, quotes, etc
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
     let delimitMate_expand_cr=2
     " expand space in bash as it is needed by bash-syntax
     au FileType sh let b:delimitMate_expand_space=1
@@ -277,10 +275,10 @@ Plugin 'Raimondi/delimitMate'
     au FileType tex let b:delimitMate_quotes="\" ` $"
 
 " status bar on the bottom
-Plugin 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 
 " LaTeX in VIM
-Plugin 'lervag/vimtex'
+Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
     let g:vimtex_view_method='skim'
     let g:vimtex_quickfix_mode=0
@@ -297,10 +295,10 @@ Plugin 'lervag/vimtex'
         \}
     
 " get YCM and UltiSnips to not conflict
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 
 " Autocompletion
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
     let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
     let g:ycm_autoclose_preview_window_after_completion=1
     let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
@@ -322,7 +320,7 @@ Plugin 'Valloric/YouCompleteMe'
     au FileType tex let g:tex_conceal='abdmg'
    
 " snippets
-Plugin 'sirver/UltiSnips'
+Plug 'sirver/UltiSnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
@@ -330,17 +328,16 @@ Plugin 'sirver/UltiSnips'
     let g:UltiSnipsEditSplit = 'horizontal'
 
 " colorschemes
-Plugin 'tomasr/molokai'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'morhetz/gruvbox'
-Plugin 'arcticicestudio/nord-vim'
+Plug 'tomasr/molokai'
+Plug 'jnurmine/Zenburn'
+Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 
 " check out these ones:
 " find more on vimawesome.com
 
-call vundle#end()		    " required
-filetype plugin indent on 	" required
+call plug#end()
 
 
 " enable syntax highlighting
