@@ -15,7 +15,7 @@ if [[ "$?" != "0" ]]; then
 fi
 
 # copy snippet files to UltiSnips directory
-cp *.snippets ~/.vim/bundle/UltiSnips
+cp *.snippets ~/.vim/plugged/UltiSnips
 if [[ "$?" != "0" ]]; then
     SUCCESS=0
 fi
