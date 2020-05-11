@@ -1,24 +1,30 @@
 #!/bin/bash
 
+SUCCESS=1
+
 # copy vimrc to home if executed from downloaded directory
 if [ -f "setup.sh" ] && [ -f ".vimrc" ]; then
     echo "Copying vimrc and snippet files"
     cp .vimrc ~
 fi
 
-# download Vundle plugin manager
-if [ ! -d "~/.vim/bundle" ]; then
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-fi
-
 # install plugins
-vim +PluginInstall +qall
-
-# install YouCompleteMe
-python3 ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+vim +PlugInstall +qall
+if [[ "$?" != "0" ]]; then
+    SUCCESS=0
+fi
 
 # copy snippet files to UltiSnips directory
 cp *.snippets ~/.vim/bundle/UltiSnips
+if [[ "$?" != "0" ]]; then
+    SUCCESS=0
+fi
 
 # done
-echo "VIM setup done"
+if [[ "$SUCCESS" == "1" ]]; then
+    echo "VIM setup done"
+    exit 0
+else
+    echo "Error while setting up Vim"
+    exit 1
+fi
