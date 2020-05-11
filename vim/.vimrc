@@ -255,7 +255,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " Vim-Plug
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.vim/plugged')
 
 " Auto indentation for python
 Plug 'vim-scripts/indentpython.vim'
