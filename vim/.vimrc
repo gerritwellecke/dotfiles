@@ -324,7 +324,7 @@ Plug 'sirver/UltiSnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
     let g:UltiSnipsJumpBackwardTrigger = '<S-tab>'
-    let g:UltiSnipsSnippetDirectories=["bundle/UltiSnips"]
+    let g:UltiSnipsSnippetDirectories=["plugged/UltiSnips"]
     let g:UltiSnipsEditSplit = 'horizontal'
 
 " colorschemes
