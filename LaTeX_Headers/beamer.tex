@@ -1,0 +1,74 @@
+\documentclass[10pt, aspectratio=169]{beamer}
+
+\usetheme[block=fill]{metropolis}
+\usepackage{appendixnumberbeamer}
+
+\usepackage{booktabs}
+\usepackage[scale=2]{ccicons}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usepackage{xspace}
+\newcommand{\themename}{\textbf{\textsc{metropolis}}\xspace}
+
+%%% Bibliography setup for presentations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{csquotes}
+\usepackage[backend=biber, sorting=none, style=numeric, url=false, eprint=false, isbn=false, doi=false]{biblatex}
+\bibliography{references} % bibfile w/o file ending!
+
+% name format to use only last names
+\DeclareNameFormat{family}{%
+  \usebibmacro{name:family}
+      {\namepartfamily}
+      {\namepartgiven}
+      {\namepartprefix}
+      {\namepartsuffix}%
+  \usebibmacro{name:andothers}}
+
+% cite papers and books on slides
+\DeclareCiteCommand{\shortcite}{}{%
+\printnames[family]{author}, \printfield{journaltitle} \textbf{\printfield{volume}}, \printfield[number]{pages} (\printfield{year})}{;}{}
+\DeclareCiteCommand{\bookcite}{}{%
+\printnames[family]{author}. \emph{\printfield{title}}, \printlist{publisher} \printfield{year}}{;}{}
+
+% cite paper on the bottom of the slide
+\renewcommand*\footnoterule{}
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1\\\vspace*{-1em}}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\renewcommand{\footcite}[1]{\blfootnote{\fontsize{7pt}{8pt}\selectfont\shortcite{#1}}}
+\newcommand{\footbookcite}[1]{\blfootnote{\fontsize{7pt}{8pt}\selectfont\bookcite{#1}}}
+
+% change 'and' to '&' in listing names
+\DeclareDelimFormat[shortcite,bookcite]{finalnamedelim}{%
+  \ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}%
+  \addspace\&\space}
+
+%%% End of Bibliography setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+% TikZ
+\usepackage{tikz}
+\usetikzlibrary{calc, overlay-beamer-styles}
+
+% Standard math packages:
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools}
+
+% for vectors: (\vec, \tens, \matr)
+\usepackage[uline]{hhtensor}
+% for tensors: (\tensor[before]{T}{after}, T\indices{^a_b^{cd}})
+\usepackage{tensor}
+
+
+% useful commands in math
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\const}{\mathrm{const.}}
+\renewcommand{\d}{\mathrm{d}}
+\renewcommand{\O}{\mathcal{O}}
+\renewcommand{\phi}{\varphi}
