@@ -1,27 +1,20 @@
 % Standard math packages:
 \usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools}
+\usepackage{aligned-overset}
 
 % for vectors: (\vec, \tens, \matr)
 \usepackage[uline]{hhtensor}
 % for tensors: (\tensor[before]{T}{after}, T\indices{^a_b^{cd}})
 \usepackage{tensor}
 
-
 % self defined theorem environments
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
-
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-
-\theoremstyle{remark}
-\newtheorem*{remark}{Remark}
-\newtheorem{example}[theorem]{Example}
-
+\usepackage{thmtools}
+\declaretheorem[style=plain, numberwithin=chapter]{theorem}
+\declaretheorem[style=definition, sibling=theorem,shaded]{definition}
+\declaretheorem[style=remark, numbered=no]{remark}
+\declaretheorem[style=remark, sibling=theorem, shaded={rulecolor=blue!30, rulewidth=2pt, bgcolor=white}]{example}
 
 % useful commands in math
-\newcommand{\R}{\mathbb{R}}
+\newcommand{\RR}{\mathbb{R}}
 \newcommand{\const}{\mathrm{const.}}
-\renewcommand{\d}{\mathrm{d}}
-\renewcommand{\i}{\mathrm{i}}
-\renewcommand{\O}{\mathcal{O}}
+\newcommand{\ord}{\mathcal{O}}

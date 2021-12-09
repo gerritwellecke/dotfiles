@@ -17,14 +17,17 @@ set $mod Mod1
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+set $fnt "pango:DejaVu Sans Mono 9"
+font $fnt
+
+set $barfnt "pango:DejaVu Sans Mono, FontAwesome 5 Free 9"
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -c 000000
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -32,14 +35,14 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% #&& $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% #&& $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle #&& $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle #&& $refresh_i3status
 
 # change screen brightness
-bindsym XF86MonBrightnessUp     exec "sudo brightnessctl s 10%-";
-bindsym XF86MonBrightnessDown   exec "sudo brightnessctl s +10%";
+bindsym XF86MonBrightnessUp     exec "sudo brightnessctl s +10%";
+bindsym XF86MonBrightnessDown   exec "sudo brightnessctl s 10%-";
 bindsym control+F5              exec "sudo brightnessctl s 10%-";
 bindsym control+F6              exec "sudo brightnessctl s +10%";
 
@@ -67,10 +70,10 @@ bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+#bindsym $mod+Left focus left
+#bindsym $mod+Down focus down
+#bindsym $mod+Up focus up
+#bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -109,16 +112,16 @@ bindsym $mod+Shift+a focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
+set $ws1 "1: "
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
 set $ws5 "5"
-set $ws6 "6"
+set $ws6 "6: "
 set $ws7 "7"
 set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
+set $ws9 "9:  "
+set $ws10 "10: "
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -144,6 +147,49 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+# Assign programs to workspaces
+assign [class="Google-chrome"]      $ws2
+assign [class="discord"]            $ws3
+assign [class="Signal"]             $ws3
+assign [class="TelegramDesktop"]    $ws3
+assign [class="Element"]            $ws3
+assign [class="Thunderbird"]        $ws4
+assign [class="zoom"]               $ws3
+assign [class="Darktable"]          $ws6
+assign [class="Inkscape"]           $ws6
+assign [class="FreeCAD"]            $ws6
+assign [class="kdenlive"]           $ws6
+assign [class="Kicad"]              $ws6
+assign [class="Evince"]             $ws9
+assign [class="Eog"]                $ws9
+assign [class="^matplotlib$"]       $ws10
+
+for_window [class="Eog"] focus
+for_window [class="Evince"] focus
+for_window [class="Google-chrome"] focus
+for_window [class="Inkscape"] focus
+for_window [class="Thunderbird"] focus
+for_window [class="zoom"] focus
+
+for_window [class="^matplotlib$"] move to workspace $ws10
+
+for_window [class="Gnome-calculator"] floating enable
+
+# Assign workspaces to monitors
+workspace $ws1 output eDP
+workspace $ws2 output HDMI-A-0
+workspace $ws3 output eDP
+workspace $ws4 output eDP
+#workspace $ws5 output HDMI-A-0
+workspace $ws6 output HDMI-A-0
+#workspace $ws6 output eDP
+workspace $ws9 output HDMI-A-0
+workspace $ws10 output HDMI-A-0
+
+# move workspaces between windows
+bindsym $mod+control+w move workspace to output eDP
+bindsym $mod+control+shift+w move workspace to output up
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -152,14 +198,60 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
-bindsym $mod+shift+y resize shrink width 2 px or 2 ppt
-bindsym $mod+shift+u resize grow height 2 px or 2 ppt
-bindsym $mod+shift+i resize shrink height 2 px or 2 ppt
-bindsym $mod+shift+o resize grow width 2 px or 2 ppt
+set $resize_step 2
+bindsym $mod+shift+y resize shrink width $resize_step px or $resize_step ppt
+bindsym $mod+shift+u resize grow height $resize_step px or $resize_step ppt
+bindsym $mod+shift+i resize shrink height $resize_step px or $resize_step ppt
+bindsym $mod+shift+o resize grow width $resize_step px or $resize_step ppt
 
+#### Colorschemes and Window appearance -- I REALLY LIKE THE DEFAULT
+# hide borders
+#hide_edge_borders smart 
+hide_edge_borders both
 
+# # Colors
+# set $bg-c 	         #2f343f
+# set $inactive-bg-c   #21242c
+# set $text-c          #ededf4
+# set $inactive-text-c #818898
+# set $urgent-bg-c     #E53935
+# set $indicator-c     #0a88a0
+# 
+# # window colors
+# # class				     border 		    background	    text 			    indicator
+# client.focused 			 $bg-c 		        $bg-c 		    $text-c 		    $indicator-c
+# client.unfocused 		 $inactive-bg-c 	$inactive-bg-c 	$inactive-text-c 	$indicator-c
+# client.focused_inactive  $inactive-bg-c 	$inactive-bg-c 	$inactive-text-c 	$indicator-c
+# client.urgent 			 $urgent-bg-c 	    $urgent-bg-c   	$text-c 		    $indicator-c
+# # color of line when resizing with $mod+rmb is client.focused.border
+# # missing: client.placeholder class for placeholder windows (layout restorations)
+
+### Bar configuration
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    status_command i3status -c ~/.config/i3/i3status.conf
+    #status_command i3blocks
+
+    mode dock
+    # bar only on primary screen
+    #output primary # use this once I have different bars for different screens
+    # tray (symbols for: bluetooth, zoom, etc.) only on primary screen
+    tray_output primary
+
+    font $barfnt
+    # colors {
+	# 	background $bg-c
+	#     	separator #3aabe4
+	# 	#                  border             background        text
+	# 	focused_workspace  $bg-c              $bg-c             $text-c
+	# 	inactive_workspace $inactive-bg-c     $inactive-bg-c    $inactive-text-c
+	# 	urgent_workspace   $urgent-bg-c       $urgent-bg-c      $text-c
+    # }
 }
+
+# doesn't belong here... but for now it works
+exec "xset s off && xset -dpms"
+
+# also does not really belong here
+exec "rfkill block bluetooth"

@@ -76,7 +76,7 @@ set ffs=unix,mac,dos
 set nu
 
 " gui colors in tui
-"set termguicolors
+set termguicolors
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -88,6 +88,12 @@ set expandtab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+
+au FileType javascript,html,css call SetJSoptions()
+function SetJSoptions()
+    setlocal shiftwidth=2
+    setlocal tabstop=2
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -172,7 +178,8 @@ fun! CleanExtraSpaces()
 endfun
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
+    "autocmd BufWritePre *.txt,*.js,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
+    autocmd BufWritePre *.txt,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
 endif
 
 " move in editor lines not code lines
@@ -193,6 +200,8 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" include lilypond code for nvim
+set runtimepath+=/usr/share/lilypond/2.20.0/vim/
 
 " Vim-Plug
 call plug#begin(stdpath('data') . '/plugged')
@@ -220,7 +229,7 @@ Plug 'vim-airline/vim-airline'
 " LaTeX in VIM
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
-    let g:vimtex_view_method='skim'
+    let g:vimtex_view_method='zathura'
     let g:vimtex_quickfix_mode=0
     " added shell-escape option to compile {minted}
     let g:vimtex_compiler_latexmk = {
@@ -254,10 +263,10 @@ Plug 'ervandew/supertab'
 " Autocompletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
     let g:coc_global_extensions = [
-			    \'coc-vimtex',
-			    \'coc-clangd', 
-			    \'coc-sh',]
-			    "\'coc-pyright',
+			    \'coc-sh',
+			    \'coc-pyright',
+			    \'coc-vimtex',]
+			    ""\'coc-clangd', 
 			    "\'coc-julia',
 			    "\'coc-snippets']
 
@@ -275,11 +284,14 @@ Plug 'sirver/UltiSnips'
 
 
 " colorschemes
-Plug 'tomasr/molokai'
 Plug 'jnurmine/Zenburn'
 Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+let g:gruvbox_contrast_dark = 'hard'
 Plug 'arcticicestudio/nord-vim'
+
+" django template highlighting
+Plug 'vim-scripts/django.vim'
 
 " check out these ones:
 " find more on vimawesome.com
@@ -291,13 +303,13 @@ colorscheme gruvbox
 syntax on
 
 " mark 81st column as ruler when coding
-au FileType c,cpp,java,julia,python,sh set colorcolumn=81
+au FileType c,cpp,javascript,java,julia,python,sh set colorcolumn=81
 
-au FileType tex noremap <leader>tt :VimtexTocOpen<CR>
 au FileType tex noremap <leader>us :UltiSnipsEdit<CR>
+au FileType tex call coc#config("suggest.autoTrigger", "trigger")
 
 " disable continuing comments on multiple lines
 au FileType * set fo -=ro
 
 " disable completion for TeX
-au FileType tex let b:coc_suggest_disable = 1
+"au FileType tex let b:coc_suggest_disable = 1

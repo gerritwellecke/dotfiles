@@ -163,8 +163,12 @@ snippet table "Table environment" b
 	\centering
 	\caption{${2:caption}}
 	\label{tab:${3:label}}
-	\begin{tabular}{${5:c}}
-	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
+	\begin{tabular}{${5:alignments}}
+	\toprule
+	$6 \\\\
+	\midrule
+	$0
+	\bottomrule
 	\end{tabular}
 \end{table}
 endsnippet
@@ -174,7 +178,7 @@ snippet fig "Figure environment" b
 	\centering
 	\includegraphics[${2:width=${3:.8}\textwidth}$4]{${5:path/to/image}}
 	\caption{$6}
-	\label{fig:${7:${5/\W+/-/g}}}
+	\label{fig:$7}
 \end{figure}
 endsnippet
 
@@ -207,6 +211,35 @@ snippet frame "New Frame" b
 \begin{frame}{${1:Title}}
 	${0:${VISUAL}}
 \end{frame}
+endsnippet
+
+snippet cha "Chapter" bw
+\chapter{$1}
+\label{chap:${1/\ /_/g}}
+$0
+endsnippet
+
+snippet sec "Section" bw
+\section{$1}
+\label{sec:${1/\ /_/g}}
+$0
+endsnippet
+
+snippet sub "Subsection" bw
+\subsection{$1}
+\label{subsec:${1/\ /_/g}}
+$0
+endsnippet
+
+snippet subsub "Subsection" bw
+\subsubsection{$1}
+\label{subsubsec:${1/\ /_/g}}
+$0
+endsnippet
+
+snippet par "Subsection" bw
+\paragraph{$1}
+$0
 endsnippet
 
 priority 100
@@ -320,12 +353,12 @@ endsnippet
 
 context "math()"
 snippet ceil "ceil" iA
-\left\lceil $1 \right\rceil $0
+\left\lceil $1\right\rceil $0
 endsnippet
 
 context "math()"
 snippet floor "floor" iA
-\left\lfloor $1 \right\rfloor $0
+\left\lfloor $1\right\rfloor $0
 endsnippet
 
 snippet pmat "pmat" iA
@@ -338,42 +371,42 @@ endsnippet
 
 context "math()"
 snippet () "left( right)" iA
-\left( ${1:${VISUAL}} \right) $0
+\left( ${1:${VISUAL}}\right)$0
 endsnippet
 
 context "math()"
 snippet lr "left( right)" i
-\left( ${1:${VISUAL}} \right) $0
+\left( ${1:${VISUAL}}\right)$0
 endsnippet
 
 context "math()"
 snippet lrp "left( right)" i
-\left( ${1:${VISUAL}} \right) $0
+\left( ${1:${VISUAL}}\right)$0
 endsnippet
 
 context "math()"
 snippet lr| "left| right|" i
-\left| ${1:${VISUAL}} \right| $0
+\left| ${1:${VISUAL}}\right|$0
 endsnippet
 
 context "math()"
 snippet lrn "left|| right||" i
-\left\| ${1:${VISUAL}} \right\| $0
+\left\| ${1:${VISUAL}}\right\|$0
 endsnippet
 
 context "math()"
-snippet lrb "left\{ right\}" i
-\left\\{ ${1:${VISUAL}} \right\\} $0
+snippet lrbb "left\{ right\}" i
+\left\\{ ${1:${VISUAL}}\right\\}$0
 endsnippet
 
 context "math()"
-snippet lrbb "left[ right]" i
-\left[ ${1:${VISUAL}} \right] $0
+snippet lrb "left[ right]" i
+\left[ ${1:${VISUAL}}\right]$0
 endsnippet
 
 context "math()"
 snippet lra "leftangle rightangle" iA
-\left< ${1:${VISUAL}} \right> $0
+\left< ${1:${VISUAL}}\right>$0
 endsnippet
 
 snippet \sum "sum" w
@@ -386,18 +419,18 @@ endsnippet
 
 context "math()"
 snippet braket "Braket" i
-\left< $1 | $2 \right> $0
+\left< $1| $2\right>$0
 endsnippet
 
 priority 300
 context "math()"
 snippet bra "Bra vector" i
-\left| ${1:${VISUAL}} \right>$0
+\left| ${1:${VISUAL}}\right>$0
 endsnippet
 
 context "math()"
 snippet ket "Ket vector" i
-\left< ${1:${VISUAL}} \right|$0
+\left< ${1:${VISUAL}}\right|$0
 endsnippet
 
 context "math()"
@@ -438,22 +471,22 @@ endsnippet
 
 context "math()"
 snippet \partial "d/dx" i
-\frac{\partial ${1:f}}{\partial ${2:x}} $0
+\frac{\partial ${1:f}}{\partial ${2:t}} $0
 endsnippet
 
 context "math()"
 snippet pd "d/dx" w
-\frac{\partial ${1:f}}{\partial ${2:x}} $0
+\frac{\partial ${1:f}}{\partial ${2:t}} $0
 endsnippet
 
 context "math()"
 snippet dd "d/dx" w
-\frac{\mathrm{d} ${1:f}}{\mathrm{d} ${2:x}} $0
+\frac{\mathrm{d} ${1:f}}{\mathrm{d} ${2:t}} $0
 endsnippet
 
 context "math()"
 snippet sqrt "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}} $0
+\sqrt{${1:${VISUAL}}}$0
 endsnippet
 
 context "math()"
@@ -468,29 +501,34 @@ endsnippet
 
 context "math()"
 snippet ^^ "to the ... power" iA
-^{$1} $0
+^{$1}$0
 endsnippet
 
 context "math()"
 snippet tp "to the ... power" iA
-^{$1} $0
+^{$1}$0
 endsnippet
 
 context "math()"
 snippet rp "to the (...) power" wA
-^{($1)} $0
+^{($1)}$0
 endsnippet
 
 snippet __ "subscript" iA
-_{$1} $0
+_{$1}$0
 endsnippet
 
 snippet ooo "\infty" iA
-\infty $0
+\infty$0
 endsnippet
 
-snippet ddd "differential" A
+context "math()"
+snippet ddd "differential" iA
 \mathrm{d} $0
+endsnippet
+
+snippet ,,, "math space" iA
+\, $0
 endsnippet
 
 snippet <= "leq" iA
@@ -532,7 +570,7 @@ endsnippet
 
 context "math()"
 snippet nabl "nabla" iA
-\nabla $0
+\nabla$0
 endsnippet
 
 context "math()"
@@ -541,18 +579,18 @@ snippet xx "cross" i
 endsnippet
 
 priority 100
-snippet ** "cdot" iA
+snippet ** "cdot" A
 \cdot $0
 endsnippet
 
 context "math()"
-snippet norm "norm" iA
-\|$1\| $0
+snippet norm "norm" iwA
+\|$1\|$0
 endsnippet
 
 context "math()"
 snippet thf "therefore" wA
-\therefore \, $0
+\therefore $0
 endsnippet
 
 context "math()"
@@ -615,22 +653,27 @@ endsnippet
 priority 200
 context "math()"
 snippet inv "inverse" iA
-^{-1} $0
+^{-1}$0
 endsnippet
 
 context "math()"
 snippet trans "transpose" iA
-^\mathrm{T} $0
+^\mathrm{T}$0
 endsnippet
 
 context "math()"
 snippet conj "conjugate" iA
-^* $0
+^*$0
+endsnippet
+
+context "math()"
+snippet dagger "dagger" iA
+^\dagger $0
 endsnippet
 
 context "math()"
 snippet compl "complement" iA
-^{\mathrm{c}} $0
+^{\mathrm{c}}$0
 endsnippet
 
 snippet >> ">>" iA
@@ -647,13 +690,13 @@ endsnippet
 
 context "math()"
 snippet set "set" wA
-\\{$1\\} $0
+\\{$1\\}$0
 endsnippet
 
 priority 300
 context "math()"
 snippet stt "text subscript" iA
-_\text{$1} $0
+_\text{$1}$0
 endsnippet
 
 context "math()"
@@ -676,12 +719,12 @@ context "math()"
 snippet cases "cases" wA
 \begin{cases}
 	$1
-\end{cases}
+\end{cases} $0
 endsnippet
 
 context "math()"
-snippet SI "SI" iA
-\SI{$1}{$2}
+snippet '(?<!\\)SI' "SI" riA
+\qty{$1}{$2}$0
 endsnippet
 
 snippet ul "underline" w
@@ -711,12 +754,12 @@ endsnippet
 priority 10
 context "math()"
 snippet "(?<!\\)tilde" "tilde" riA
-\tilde{$1} $0
+\tilde{$1}$0
 endsnippet
 
 context "math()"
 snippet "bar" "bar" riA
-\overline{$1} $0
+\overline{$1}$0
 endsnippet
 
 priority 80
@@ -727,14 +770,19 @@ endsnippet
 
 priority 10
 context "math()"
-snippet "hat" "hat" riA
-\hat{$1} $0
+snippet "(?<!\\)hat" "hat" riA
+\hat{$1}$0
 endsnippet
 
 priority 100
 context "math()"
 snippet "([a-zA-Z])hat" "hat" riA
 \hat{`!p snip.rv=match.group(1)`}
+endsnippet
+
+context "math()"
+snippet "([a-zA-Z])tilde" "tilde" riA
+\tilde{`!p snip.rv=match.group(1)`}
 endsnippet
 
 
@@ -941,71 +989,81 @@ endsnippet
 priority 100
 context "math()"
 snippet "(?<!\\)vec" "Vector" rwA
-\vec{$1} $0
+\vec{$1}$0
 endsnippet
 
 context "math()"
 snippet "vv" "Vector" rwA
-\vec{$1} $0
+\vec{${1:${VISUAL}}}$0
 endsnippet
 
 priority 110
 context "math()"
 snippet dvec "dotted vector" wA
-\dot{\vec{$1}} $0
+\dot{\vec{$1}}$0
 endsnippet
 
 context "math()"
 snippet tvec "transpose vector" wA
-\vec{$1}^\mathrm{T} $0
+\vec{$1}^\mathrm{T}$0
 endsnippet
 
 context "math()"
 snippet ivec "inverse vector" wA
-\vec{$1}^{-1} $0
+\vec{$1}^{-1}$0
 endsnippet
 
 context "math()"
 snippet ddvec "double dotted vector" wA
-\ddot{\vec{$1}} $0
+\ddot{\vec{$1}}$0
 endsnippet
 
 # alternative notation
 context "math()"
 snippet dvv "dotted vector" wA
-\dot{\vec{$1}} $0
+\dot{\vec{$1}}$0
 endsnippet
 
 context "math()"
 snippet tvv "transpose vector" wA
-\vec{$1}^\mathrm{T} $0
+\vec{$1}^\mathrm{T}$0
+endsnippet
+
+context "math()"
+snippet cvv "conjugate vector" wA
+\vec{$1}^*$0
 endsnippet
 
 context "math()"
 snippet ivv "inverse vector" wA
-\vec{$1}^{-1} $0
+\vec{$1}^{-1}$0
 endsnippet
 
 context "math()"
 snippet ddvv "double dotted vector" wA
-\ddot{\vec{$1}} $0
+\ddot{\vec{$1}}$0
 endsnippet
 
 # MATRICES
 context "math()"
 snippet "(?<!\\)mat" "Matrix" rwA
-\matr{$1} $0
+\matr{$1}$0
 endsnippet
 
 priority 120
 context "math()"
 snippet tmat "transpose Matrix" wA
-\matr{$1}^\mathrm{T} $0
+\matr{$1}^\mathrm{T}$0
 endsnippet
 
 context "math()"
 snippet imat "inverse Matrix" wA
-\matr{$1}^{-1} $0
+\matr{$1}^{-1}$0
+endsnippet
+
+context "math()"
+snippet cmat "inverse Matrix" wA
+\matr{$1}^*$0
 endsnippet
 
 priority 100
