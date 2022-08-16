@@ -1,10 +1,12 @@
 {
+    "suggest.noselect": true,
     "languageserver": {
         "ccls": {
             "command": "ccls",
             "filetypes": [
                 "c",
                 "cpp",
+                "c++",
                 "objc",
                 "objcpp"
             ],

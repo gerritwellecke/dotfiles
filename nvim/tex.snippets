@@ -301,9 +301,9 @@ $0
 endsnippet
 
 snippet *equ "Equation w/o number" bA
-\begin{equation*}
+\[
 	${1:${VISUAL}}
-\end{equation*}
+\]
 $0
 endsnippet
 
@@ -375,6 +375,21 @@ snippet () "left( right)" iA
 endsnippet
 
 context "math()"
+snippet {} "left\{ right\}" iA
+\left\\{ ${1:${VISUAL}}\right\\}$0
+endsnippet
+
+context "math()"
+snippet [] "left[ right]" iA
+\left[ ${1:${VISUAL}}\right]$0
+endsnippet
+
+context "math()"
+snippet <> "leftangle rightangle" iA
+\left< ${1:${VISUAL}}\right>$0
+endsnippet
+
+context "math()"
 snippet lr "left( right)" i
 \left( ${1:${VISUAL}}\right)$0
 endsnippet
@@ -409,12 +424,14 @@ snippet lra "leftangle rightangle" iA
 \left< ${1:${VISUAL}}\right>$0
 endsnippet
 
+context "math()"
 snippet \sum "sum" w
 \sum_{${1:n=0}}${2:^{${3:\infty}}} ${0:${VISUAL}}
 endsnippet
 
+context "math()"
 snippet \int "integral" w
-\int${3:_{${4:\mathbb{R}}}${5:^{${6:\infty}}}} ${1:\mathrm{d}${2: x}\,} ${0:${VISUAL}}
+\int${3:_\{${4:\mathbb\{R\}}\}${5:^\{${6:\infty}\}}} ${1:\mathrm\{d\}${2: x}\,} ${0:${VISUAL}}
 endsnippet
 
 context "math()"
@@ -434,7 +451,7 @@ snippet ket "Ket vector" i
 endsnippet
 
 context "math()"
-snippet iint "integral" wA
+snippet iii "integral" wA
 \int \mathrm{d}${1: x}\, ${0:${VISUAL}}
 endsnippet
 
@@ -551,17 +568,17 @@ endsnippet
 
 context "math()"
 snippet mcal "mathcal" iA
-\mathcal{$1} $0
+\mathcal{$1}$0
 endsnippet
 
 context "math()"
 snippet mrm "mathrm" iA
-\mathrm{$1} $0
+\mathrm{$1}$0
 endsnippet
 
 context "math()"
 snippet mbb "mathbb" iA
-\mathbb{$1} $0
+\mathbb{$1}$0
 endsnippet
 
 snippet lll "l" iA
@@ -658,12 +675,12 @@ endsnippet
 
 context "math()"
 snippet trans "transpose" iA
-^\mathrm{T}$0
+\trans$0
 endsnippet
 
 context "math()"
 snippet conj "conjugate" iA
-^*$0
+\conj$0
 endsnippet
 
 context "math()"
@@ -689,14 +706,24 @@ snippet ~~ "~" iA
 endsnippet
 
 context "math()"
-snippet set "set" wA
+snippet '(?<![\\a-z])set' "set" rwA
 \\{$1\\}$0
+endsnippet
+
+context "math()"
+snippet cup "set union" w
+\bigcup$0
+endsnippet
+
+context "math()"
+snippet cap "set intersection" w
+\bigcap$0
 endsnippet
 
 priority 300
 context "math()"
 snippet stt "text subscript" iA
-_\text{$1}$0
+_\mathrm{$1}$0
 endsnippet
 
 context "math()"
@@ -1005,7 +1032,7 @@ endsnippet
 
 context "math()"
 snippet tvec "transpose vector" wA
-\vec{$1}^\mathrm{T}$0
+\vec{$1}\trans$0
 endsnippet
 
 context "math()"
@@ -1026,12 +1053,12 @@ endsnippet
 
 context "math()"
 snippet tvv "transpose vector" wA
-\vec{$1}^\mathrm{T}$0
+\vec{$1}\trans$0
 endsnippet
 
 context "math()"
 snippet cvv "conjugate vector" wA
-\vec{$1}^*$0
+\vec{$1}\conj$0
 endsnippet
 
 context "math()"
@@ -1053,7 +1080,7 @@ endsnippet
 priority 120
 context "math()"
 snippet tmat "transpose Matrix" wA
-\matr{$1}^\mathrm{T}$0
+\matr{$1}\trans$0
 endsnippet
 
 context "math()"
@@ -1063,7 +1090,7 @@ endsnippet
 
 context "math()"
 snippet cmat "inverse Matrix" wA
-\matr{$1}^*$0
+\matr{$1}\conj$0
 endsnippet
 
 priority 100
