@@ -75,8 +75,8 @@ set ffs=unix,mac,dos
 " line numbers
 set nu
 
-" gui colors in tui
-set termguicolors
+" gui colors in tui " this breaks things on mac!
+"set termguicolors
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -135,6 +135,8 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
+nnoremap <leader><space> :noh<cr>
+
 " Specify the behavior when switching between buffers 
 try
   set switchbuf=useopen,usetab,newtab
@@ -179,7 +181,7 @@ endfun
 
 if has("autocmd")
     "autocmd BufWritePre *.txt,*.js,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
-    autocmd BufWritePre *.txt,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
+    autocmd BufWritePre *.txt,*.py,*.c,*.cpp,*.cc,*.wiki,*.sh,*.tex,*.jl :call CleanExtraSpaces()
 endif
 
 " move in editor lines not code lines
@@ -188,6 +190,10 @@ nnoremap k gk
 
 " prevent command from showing in last line (simply distracts me visually)
 set noshowcmd
+
+" deactivate mouse in nvi-modes.
+" I don't use it and accidentally clicking bothers me!
+set mouse=
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -212,6 +218,10 @@ Plug 'vim-scripts/indentpython.vim'
 " Julia support
 Plug 'julialang/julia-vim'
 
+" Table of Contents for code files
+Plug 'preservim/tagbar'
+nmap <leader>t :TagbarToggle<CR>
+
 " NERDTree file explorer
 Plug 'scrooloose/nerdtree'
 
@@ -229,7 +239,8 @@ Plug 'vim-airline/vim-airline'
 " LaTeX in VIM
 Plug 'lervag/vimtex'
     let g:tex_flavor='latex'
-    let g:vimtex_view_method='zathura'
+    "let g:vimtex_view_method='zathura'
+    let g:vimtex_view_method='skim'
     let g:vimtex_quickfix_mode=0
     "" added shell-escape option to compile {minted}
     "let g:vimtex_compiler_latexmk = {
@@ -297,7 +308,6 @@ syntax on
 " mark 81st column as ruler when coding
 au FileType c,cpp,javascript,java,julia,python,sh set colorcolumn=81
 
-au FileType tex noremap <leader>us :UltiSnipsEdit<CR>
 au FileType tex call coc#config("suggest.autoTrigger", "trigger")
 
 " disable continuing comments on multiple lines
@@ -419,19 +429,10 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 """"""""
-" use <tab> for trigger completion and navigate to the next complete item
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-"inoremap <silent><expr> <Tab>
-"      \ coc#pum#visible() ? coc#pum#next(1) :
-"      \ CheckBackspace() ? "\<Tab>" :
-"      \ coc#refresh()
-
+" Some coc-snippet configuration
 inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
 inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
+
 " pick first suggested completion entry
 inoremap <expr> <cr> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 
@@ -442,12 +443,18 @@ inoremap <silent><expr> <TAB>
       \ CheckBackspace() ? "\<TAB>" :
       \ coc#refresh()
 
-" BACKUP: original solution from github
+"" BACKUP: original solution from github
 "inoremap <silent><expr> <TAB>
 "      \ coc#pum#visible() ? coc#_select_confirm() :
 "      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
 "      \ CheckBackspace() ? "\<TAB>" :
 "      \ coc#refresh()
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<S-tab>'
