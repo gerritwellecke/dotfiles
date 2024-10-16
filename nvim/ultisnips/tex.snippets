@@ -196,10 +196,10 @@ snippet / "Fraction" i
 \\frac{${VISUAL}}{$1}$0
 endsnippet
 
-#context "math()"
-#snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
-#\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-#endsnippet
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
 
 priority 1000
 #context "math()"
@@ -448,7 +448,7 @@ snippet EE "exists" wA
 endsnippet
 
 context "math()"
-snippet AA "forall" w
+snippet AAA "forall" w
 \forall $0
 endsnippet
 
@@ -542,76 +542,76 @@ snippet , "Equation comma" w
 endsnippet
 
 priority 100
-#context "math()"
-#snippet '(?<!\\)(sin|cos|arccot|cot|csc|partial|ln|log|exp|star|perp|propto|hbar|sum)' "ln" rwA
-#\\`!p snip.rv = match.group(1)`
-#endsnippet
 context "math()"
-snippet '(?<!\\)sin' "sin" rwA
-\\sin$0
+snippet '\b(?<!\\)(sin|cos|arccot|cot|csc|partial|ln|log|exp|star|perp|propto|hbar|sum)' "ln" rwA
+\\`!p snip.rv = match.group(1)`
 endsnippet
-
-context "math()"
-snippet '(?<!\\)cos' "cos" rwA
-\\cos$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)tan' "tan" rwA
-\\tan$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)sum' "sum" rwA
-\\sum$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)prod' "sum" rwA
-\\prod$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)exp' "exp" rwA
-\\exp$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)partial' "partial" rwA
-\\partial$0
-endsnippet
-
+# context "math()"
+# snippet '(?<!\\)sin' "sin" rwA
+# \\sin$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)cos' "cos" rwA
+# \\cos$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)tan' "tan" rwA
+# \\tan$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)sum' "sum" rwA
+# \\sum$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)prod' "sum" rwA
+# \\prod$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)exp' "exp" rwA
+# \\exp$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)partial' "partial" rwA
+# \\partial$0
+# endsnippet
+#
 context "math()"
 snippet '(?<!\\)ppp' "partial" rwA
 \\partial$0
 endsnippet
-
-context "math()"
-snippet '(?<!\\)ln' "ln" rwA
-\\ln$0
-endsnippet
-
-context "math()"
-snippet '(?<!\\)log' "log" rwA
-\\log$0
-endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)ln' "ln" rwA
+# \\ln$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)log' "log" rwA
+# \\log$0
+# endsnippet
 
 priority 200
-#context "math()"
-#snippet '(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rwA
-#\\`!p snip.rv = match.group(1)`
-#endsnippet
-
-# for now workaround as python doesn't work
 context "math()"
-snippet '(?<!\\)int' "int" rwA
-\\int$0
+snippet '\b(?<!\\)(arcsin|arccos|arctan|arccot|arccsc|arcsec|pi|zeta|int)' "ln" rwA
+\\`!p snip.rv = match.group(1)`
 endsnippet
 
-context "math()"
-snippet '(?<!\\)pi' "pi" rwA
-\\pi$0
-endsnippet
+# # for now workaround as python doesn't work
+# context "math()"
+# snippet '(?<!\\)int' "int" rwA
+# \\int$0
+# endsnippet
+#
+# context "math()"
+# snippet '(?<!\\)pi' "pi" rwA
+# \\pi$0
+# endsnippet
 
 
 priority 200

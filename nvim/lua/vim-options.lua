@@ -61,8 +61,44 @@ vim.opt.scrolloff = 10
 vim.o.termguicolors = true
 
 vim.o.expandtab=true
--- vim.o.shiftwidth=4
--- vim.o.tabstop=4
+vim.o.shiftwidth=4
+vim.o.tabstop=4
 
--- vim.o.background = "dark" -- or "light" for light mode
+-- colorcolumns
+vim.api.nvim_create_autocmd(
+  {"FileType"},
+  {
+    pattern = {"c","cpp","python","javascript","java","julia"},
+    callback = function()
+      vim.o.colorcolumn="89"
+    end
+  }
+)
+vim.api.nvim_create_autocmd(
+  {"FileType"},
+  {
+    pattern = {"sh"},
+    callback = function()
+      vim.o.colorcolumn="81"
+    end
+  }
+)
+vim.api.nvim_create_autocmd(
+  {"BufEnter"},
+  {
+    pattern = {"*"},
+    callback = function()
+      vim.opt.formatoptions:remove('c')
+      vim.opt.formatoptions:remove('r')
+      vim.opt.formatoptions:remove('o')
+    end
+  }
+)
+-- vim.opt.formatoptions:remove("c")
+-- vim.opt.formatoptions:remove("r")
+-- vim.opt.formatoptions:remove("o")
+
+vim.o.background = "dark" -- or "light" for light mode
 vim.cmd("colorscheme gruvbox")
+-- vim.cmd("colorscheme everforest")
+-- vim.cmd("colorscheme catppuccin")

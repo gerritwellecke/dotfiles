@@ -6,6 +6,8 @@ return {
         options = {
             icons_enabled = false,
             theme = 'gruvbox',
+            -- theme = 'everforest',
+            -- theme = 'catppuccin',
             component_separators = '|',
             section_separators = '',
         },

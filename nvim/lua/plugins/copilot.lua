@@ -3,6 +3,7 @@ return {
     config = function()
       -- default is TAB but I use that key too much as is
       vim.api.nvim_set_keymap("i", "<C-l>", 'copilot#Accept("<CR>")', {expr=true, silent=true})
+      vim.cmd([[:Copilot disable]])
     end
   },
   {
@@ -10,12 +11,10 @@ return {
     opts = {
       show_help = "yes", -- Show help text for CopilotChatInPlace, default: yes
       debug = false, -- Enable or disable debug mode, the log file will be in ~/.local/state/nvim/CopilotChat.nvim.log
-      disable_extra_info = 'no', -- Disable extra information (e.g: system prompt) in the response.
-      language = "English", -- Copilot answer language settings when using default prompts. Default language is English.
       -- proxy = "socks5://127.0.0.1:3000", -- Proxies requests via https or socks.
       -- temperature = 0.1,
       prompts = {
-        Tests = "Briefly explain how the selected cod works, then generate unit tests with pytest.",
+        Tests = "Briefly explain how the selected code works, then generate unit tests with pytest.",
         Refactor = "Refactor the code to improve clarity and readability.",
         Review = "Review the code and provide feedback on its correctness and style.",
       },

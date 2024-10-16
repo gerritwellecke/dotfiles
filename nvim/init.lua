@@ -115,7 +115,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_create_autocmd(
   "BufWritePre",
   {
-    pattern = '*.py',
+    pattern = {'*.py', '*.cpp', '*.cc', '*.hpp', '*.h'},
     callback = function() vim.lsp.buf.format() end,
   })
 end
@@ -130,7 +130,9 @@ end
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  -- clangd = {},
+  clangd = {
+    mason = false,
+  },
   -- gopls = {},
   -- pyright = {},
   -- texlab = {},
@@ -176,6 +178,7 @@ mason_lspconfig.setup_handlers {
 -- See `:help cmp`
 local cmp = require 'cmp'
 local ultisnips = require 'cmp_nvim_ultisnips.mappings'
+local neogen = require 'neogen'
 -- local luasnip = require 'luasnip'
 -- This works, but not with the current syntax I have in my snippets
 -- require("luasnip.loaders.from_snipmate").lazy_load()
@@ -208,6 +211,8 @@ cmp.setup{
       function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
+        elseif neogen.jumpable() then
+          neogen.jump_next()
         else
           ultisnips.expand_or_jump_forwards(fallback)
         end
@@ -218,6 +223,8 @@ cmp.setup{
       function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
+        elseif neogen.jumpable(true) then
+          neogen.jump_prev()
         else
           ultisnips.jump_backwards(fallback)
         end
@@ -286,9 +293,6 @@ require('lsp_signature').setup({
   },
 })
 ]]
-
--- [[ Mappings for NvimTree ]]
-vim.keymap.set('n', '<leader>s', '<cmd>NvimTreeFocus<CR>')
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

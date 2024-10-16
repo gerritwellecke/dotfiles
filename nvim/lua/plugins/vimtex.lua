@@ -4,6 +4,15 @@ return {
         vim.g.tex_flavor='latex'
         vim.g.vimtex_view_method='skim'
         vim.g.vimtex_quickfix_mode=0
+        vim.g.vimtex_compiler_latexmk={
+            options = {
+                '-verbose',
+                '-file-line-error',
+                '-synctex=1',
+                '-interaction=nonstopmode',
+                '-shell-escape',
+            }
+        }
 
         vim.api.nvim_create_autocmd( "FileType", { pattern = 'tex', callback = function() vim.o.conceallevel = 1 end })
         vim.api.nvim_create_autocmd(
