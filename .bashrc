@@ -47,7 +47,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # Make chaning directories easy
 shopt -s autocd
@@ -141,6 +141,9 @@ export EDITOR=$VISUAL
 
 set bell-style none
 
+# GPG automatic signing 
+# export GPG_TTY=$(tty)
+
 # add platformIO to path
 #export PATH=$PATH:~/.platformio/penv/bin
 # add speedtest-cli to path
@@ -156,9 +159,12 @@ set bell-style none
 
 export SHELL='/opt/homebrew/bin/bash'
 
-# C/C++ Libraries from homebrew (as recommended in `brew info libomp`)
-export LDFLAGS="-L/opt/homebrew/opt/libomp/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/libomp/include"
+# C/C++ Libraries from homebrew
+# export LDFLAGS="-L/opt/homebrew/opt/llvm/lib -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+export CXX="clang++"
+export CXXFLAGS="$CPPFLAGS -I/opt/homebrew/opt/llvm/include/c++/v1 -I/opt/homebrew/include"
+
 # recommendation from stack overflow:
 export CPATH=/opt/homebrew/include
 export LIBRARY_PATH=/opt/homebrew/lib
